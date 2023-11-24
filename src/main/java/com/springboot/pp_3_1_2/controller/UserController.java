@@ -5,10 +5,7 @@ import com.springboot.pp_3_1_2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -41,17 +38,29 @@ public class UserController {
         return "redirect:/users";
     }
 
-    @GetMapping("/deleteUser")
+    @DeleteMapping("/deleteUser")
     public String deleteUser(@RequestParam("id") Long userId) {
         userService.deleteUserById(userId);
-        return "redirect:users";
+        return "redirect:/users";
     }
 
-    @GetMapping("/updateUser")
-    public String updateUser(@RequestParam("id") Long userId, Model model) {
+    @GetMapping("/user")
+    public String showUser(@RequestParam("id") Long userId, Model model) {
         User user = userService.getUserById(userId);
         model.addAttribute("user", user);
-        return "user-info";
+        return "show-user";
+    }
+
+    @GetMapping("/edit")
+    public String editUser(@RequestParam("id") Long userId, Model model) {
+        model.addAttribute("user", userService.getUserById(userId));
+        return "update-user";
+    }
+
+    @PatchMapping("/updateUser")
+    public String updateUser(@ModelAttribute("user") User user) {
+        userService.saveUser(user);
+        return "redirect:/users";
     }
 
 }

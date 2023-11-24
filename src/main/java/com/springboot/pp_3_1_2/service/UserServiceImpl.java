@@ -1,7 +1,7 @@
 package com.springboot.pp_3_1_2.service;
 
-import com.springboot.pp_3_1_2.dao.UserDAO;
 import com.springboot.pp_3_1_2.model.User;
+import com.springboot.pp_3_1_2.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,35 +9,33 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class UserServiceImp implements UserService {
-    private final UserDAO userDAO;
+public class UserServiceImpl implements UserService {
+    private final UserRepository userRepository;
 
     @Autowired
-    public UserServiceImp(UserDAO userDAO) {
-        this.userDAO = userDAO;
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
 
-    @Override
+
     public List<User> getAllUsers() {
-       return userDAO.getAllUsers();
+       return userRepository.findAll();
     }
 
 
-    @Override
+
     public User getUserById(Long userId) {
-       return userDAO.getUserById(userId);
+       return userRepository.findById(userId).orElse(null);
     }
 
     @Transactional
-    @Override
     public void deleteUserById(Long userId) {
-        userDAO.deleteUserById(userId);
+        userRepository.deleteById(userId);
     }
 
     @Transactional
-    @Override
     public void saveUser(User user) {
-        userDAO.saveUser(user);
+        userRepository.save(user);
     }
 }

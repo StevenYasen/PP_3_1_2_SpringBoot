@@ -14,24 +14,20 @@
         <th>firstName</th>
         <th>lastName</th>
         <th>email</th>
-        <th>Operations</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="user: ${users}">
-        <td th:text="${user.id}"/>
-        <td th:text="${user.firstName}"/>
-        <td th:text="${user.lastName}"/>
-        <td th:text="${user.email}"/>
-        <td>
-            <a th:href="'/updateUser?id='+${user.id}">Update</a>
-            <a th:href="'/deleteUser?id='+${user.id}">Delete</a>
-        </td>
+        <td><a th:href="'/user?id='+${user.id}" th:text="${user.id}"/></td>
+        <td><a th:href="'/user?id='+${user.id}" th:text="${user.firstName}"/></td>
+        <td><a th:href="'/user?id='+${user.id}" th:text="${user.lastName}"/></td>
+        <td><a th:href="'/user?id='+${user.id}" th:text="${user.email}"/></td>
+
     </tr>
     </tbody>
 </table>
 <div>
-    <input type="button" value="add user" onclick="window.location.href='addNewUser'">
+    <input type="button" value="Add new user" onclick="window.location.href='addNewUser'">
 </div>
 </body>
 </html>
