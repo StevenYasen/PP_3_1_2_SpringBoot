@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @Controller
 public class UserController {
@@ -20,15 +19,13 @@ public class UserController {
 
     @GetMapping("/users")
     public String getUsers(Model model) {
-        List<User> lst = userService.getAllUsers();
-        model.addAttribute("users", lst);
+        model.addAttribute("users", userService.getAllUsers());
         return "users";
     }
 
     @GetMapping("/addNewUser")
     public String addNewUser(Model model) {
-        User u = new User();
-        model.addAttribute("user", u);
+        model.addAttribute("user", new User());
         return "user-info";
     }
 
@@ -46,8 +43,7 @@ public class UserController {
 
     @GetMapping("/user")
     public String showUser(@RequestParam("id") Long userId, Model model) {
-        User user = userService.getUserById(userId);
-        model.addAttribute("user", user);
+        model.addAttribute("user", userService.getUserById(userId));
         return "show-user";
     }
 
